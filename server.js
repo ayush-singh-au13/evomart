@@ -4,9 +4,13 @@ const os = require("os");
 const cluster = require("cluster");
 const clusterWorkerSize = os.cpus().length;
 const cors = require("cors");
+const connectDB = require("./src/config/db");
 
 // configuring env file
 require("dotenv").config({path:"./.env"});
+
+// db connection
+connectDB();
 
 // handling cors
 app.use(cors());
@@ -18,6 +22,9 @@ const port = process.env.PORT
 app.get("/",(req,res) => {
     res.send({status:200,message: "Health ok !"})
 });
+
+// handling api routes
+app.use("/auth", require("./src/routes/auth.routes"));
 
 // server setup
 if (clusterWorkerSize > 1 && 1 == 2) {
