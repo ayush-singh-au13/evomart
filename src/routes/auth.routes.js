@@ -1,11 +1,19 @@
 const router = require("express").Router();
+const { signupValidator,getOtpValidator,verifyOtpValidator } = require("../validators/auth.validation");
 const ctrl = require("./../controller/auth.controller");
 const { checkIfSellerExists } = require("./../middleware");
 
 // seller sign up
-router.post("/seller/signup", checkIfSellerExists, ctrl.signupSeller);
+router.post(
+  "/signup",
+  [signupValidator],
+  checkIfSellerExists,
+  ctrl.signupSeller
+);
 // seller login
-router.post("/login",()=> {
-    res.send({status:200, message:'Logged in successfully'}); 
-});
+router.post("/otp", [getOtpValidator],ctrl.sendOtp);
+
+// verify login
+router.post("/verifyOTP", [verifyOtpValidator],ctrl.verifyPhoneOtp);
+
 module.exports = router;

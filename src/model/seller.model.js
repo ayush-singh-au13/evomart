@@ -26,7 +26,12 @@ const sellerSchema = new Schema({
     totalProjects:String,
     ongoingProjects:String,
     completedProjects:String,
-    website:String
+    website:String,
+    phoneOtp:String,
+    isAccountVerified:{
+        type:Boolean,
+        default:false
+    }
 });
 
 module.exports = model('sellers',sellerSchema);
